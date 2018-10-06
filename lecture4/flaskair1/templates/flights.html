@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Flights
+{% endblock %}
+
+{% block body %}
+    <h1>Passenger Manifests</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <th scope="col">Flight Number</th>
+            <th scope="col">Origin</th>
+            <th scope="col">Destination</th>
+            <th scope="col">Manifest</th>
+        </thead>
+        <tbody>
+        {% for flight in flights %}
+            <tr>
+                <th scope="row">{{ flight.id }}</th>
+                <td>{{ flight.origin }}</td>
+                <td>{{ flight.destination }}</td>
+                <td><a href="{{ url_for('flight', flight_id=flight.id) }}" class="btn btn-info" role="button">Passenger Manifest</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

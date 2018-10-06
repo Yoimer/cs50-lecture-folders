@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Success!
+{% endblock %}
+
+{% block body %}
+      <div class="alert alert-success" role="alert">
+        Congratulations! You have successfully booked your flight.
+      </div>
+      <a href="{{ url_for('index') }}">Back</a>
+{% endblock %}

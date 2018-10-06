@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Is it ridiculously hot?</title>
+        <style>
+            body
+            {
+                text-align: center;
+            }
+            .hot
+            {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        {% if hot %}
+            <h1 class="hot">Yes! It's ridiculously hot!</h1>
+        {% else %}
+            <h1>NO</h1>
+        {% endif %}
+    </body>
+</html>

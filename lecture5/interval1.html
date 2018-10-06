@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+
+            let counter = 0;
+
+            document.addEventListener('DOMContentLoaded', () => {
+                setInterval(() => {
+                    counter++;
+                    document.querySelector('#counter').innerHTML = counter;
+                }, 1000);
+            });
+
+        </script>
+        <title>Timer</title>
+    </head>
+    <body>
+        <h1 id="counter">0</h1>
+    </body>
+</html>

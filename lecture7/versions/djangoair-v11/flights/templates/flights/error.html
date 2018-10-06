@@ -1,0 +1,12 @@
+{% extends "flights/layout.html" %}
+
+{% block title %}
+Error
+{% endblock %}
+
+{% block body %}
+  <h1>Error</h1>
+  {{ message }}
+  <hr>
+  <a href="{% url 'index' %}">Return to main page.</a>
+{% endblock %}

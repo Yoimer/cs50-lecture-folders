@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -e
+
+echo "Installing Selenium ..."
+pip install -qU selenium
+
+echo "Installing Chrome ..."
+sudo apt-get update -qq
+sudo apt-get install -qqy fonts-liberation libappindicator3-1 xdg-utils
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -P /tmp -q
+sudo dpkg -i /tmp/google-chrome-stable_current_amd64.deb >/dev/null
+rm -f /tmp/google-chrome-stable_current_amd64.deb
+sudo apt-get install -fqqy
+
+echo "Installing Chrome driver ..."
+wget https://chromedriver.storage.googleapis.com/2.40/chromedriver_linux64.zip -P /tmp -q
+sudo unzip -oq /tmp/chromedriver_linux64.zip -d /usr/local/bin
+rm -f /tmp/chromedriver_linux64.zip
+
+echo "Done."
