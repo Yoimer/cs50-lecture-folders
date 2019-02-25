@@ -1,0 +1,186 @@
+{% extends "orders/base.html" %}
+
+{% block title %}Our Subs{% endblock %}
+{% load static %}
+
+{% block body %}
+  <h1>Our Subs</h1>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-10">
+        <table class="table">
+          <tr>
+            <th></th>
+            <th>Small</th>
+            <th>Large</th>
+
+          </tr>
+          {% for element in subs %}
+          <tr>
+            <td>{{ element.sub }}</td>
+            <td>{% if element.sub == 'Sausage, Peppers & Onions' %}{% else %}{{ element.small }}&nbsp&nbsp{% if user.is_authenticated %}{% csrf_token %}<button data-additions="{% for addition in element.additions.all %}{{ addition.addition }}:{{ addition.price }},{% endfor %}" data-dish="{{ element.sub }}" data-type="" data-size="Small" data-price="{{ element.small }}" type="button" class="btn btn-secondary btn-sm subs" data-toggle="modal" data-target="#addAdditions">Add Cart</button>{% endif %}{% endif %}</td>
+            <td>{{ element.large }}&nbsp&nbsp{% if user.is_authenticated %}{% csrf_token %}<button data-additions="{% for addition in element.additions.all %}{{ addition.addition }}:{{ addition.price }},{% endfor %}" data-dish="{{ element.sub }}" data-type="" data-size="Large" data-price="{{ element.large }}" type="button" class="btn btn-secondary btn-sm subs" data-toggle="modal" data-target="#addAdditions">Add Cart</button>{% endif %}</td>
+
+          </tr>
+          {% endfor %}
+        </table>
+        <!-- Modal -->
+        <div class="modal fade" id="addAdditions" tabindex="-1" role="dialog" aria-labelledby="Add Toppings to Your Pizza" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">It's Time for Extras!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Do you want to add anything?</p>
+                  <div class="form-group col-8" id="container">
+
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancel">Close</button>
+                <button type="button" class="btn btn-primary" id="addToCart">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% verbatim %}
+        <script id="check_template" type="text/x-handlerbar-template">
+          <div id="options">
+            <input id="nothing" class="checkboxes" data-add=""type="checkbox" value="no_addition">&nbspNo Thanks<br>
+          {{#each additions}}
+            <input class="checkboxes anything" data-price="{{ this.price }}" type="checkbox" value="{{ this.name }}">&nbsp{{ this.name }}<br>
+          {{/each}}
+          </div>
+        </script>
+        {% endverbatim %}
+        <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+          let buttons = document.querySelectorAll('.subs');
+
+          buttons.forEach(button => {
+            button.onclick = function() {
+              const template = Handlebars.compile(document.querySelector('#check_template').innerHTML);
+
+              let pre_add_list = (button.dataset.additions).split(",");
+              let add_list = [];
+
+
+              for (let k = 0; k < (pre_add_list.length - 1); k++) {
+                let prepare = pre_add_list[k].split(":");
+                add_list.push({name: prepare[0], price: prepare[1]});
+              }
+
+              const content = template({"additions": add_list});
+              console.log(content);
+
+              let container = document.querySelector('#container');
+              container.innerHTML = '';
+
+              container.insertAdjacentHTML('beforeend', content);
+              let nothing = document.querySelector('#nothing');
+
+              // Just avoid take more adds if nothing is checked
+              nothing.addEventListener('change', () => {
+                let anythings = document.querySelectorAll('.anything');
+
+                anythings.forEach(anything => {
+                  if (anything.disabled) {
+                    anything.removeAttribute("disabled");
+                  }else{
+                    anything.checked = false;
+                    anything.setAttribute("disabled", "disabled");
+                  }
+                });
+              });
+
+              let crsf = this.previousSibling.value;
+              let request = new XMLHttpRequest;
+              let data = new FormData();
+              data.append("dish", this.dataset.dish);
+              data.append("type", this.dataset.type);
+              data.append("size", this.dataset.size);
+
+              let price = parseFloat(this.dataset.price);
+
+              request.open('POST', '/added');
+              request.setRequestHeader('X-CSRFToken', crsf);
+
+              document.querySelector('#addToCart').onclick = function() {
+
+                if (document.querySelector('#nothing').checked == false) {
+
+                  let checkboxes = document.querySelectorAll('.checkboxes');
+                  let counter = 0;
+                  checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                      data.append("checkbox" + counter, checkbox.value);
+                      counter++;
+                      price += parseFloat(checkbox.dataset.price);
+                      console.log(price)
+                    }
+                  })
+
+                    request.open('POST', '/added');
+                    request.setRequestHeader('X-CSRFToken', crsf);
+                    data.append("price", price.toFixed(2));
+                    request.send(data);
+                    document.querySelector('#cancel').click();
+
+                    request.onload = () => {
+                      let data = JSON.parse(request.responseText);
+                      document.querySelector('#cart').src = "/static/orders/img/Shopping-Cart-icon-active.png";
+
+                      console.log(data);
+                    }
+
+                }else{
+
+                  request.open('POST', '/added');
+                  request.setRequestHeader('X-CSRFToken', crsf);
+                  data.append("price", price.toFixed(2));
+                  request.send(data);
+                  document.querySelector('#cancel').click();
+
+                  request.onload = () => {
+                    let data = JSON.parse(request.responseText);
+                    document.querySelector('#cart').src = "/static/orders/img/Shopping-Cart-icon-active.png";
+
+                    console.log(data);
+                  }
+                }
+              }
+            }
+          });
+        });
+        </script>
+        <h5>Some Extras</h5>
+        <table class="table">
+          <tr>
+            <th></th>
+            <th>Price</td>
+          <tr>
+            <td>Extra Cheese in All Subs</td>
+            <td>+0.50</td>
+          </tr>
+          <tr>
+            <td>Mushrooms <span style="font-size:0.8em; color: gray;"> - Just for Steaks - </span></td>
+            <td>+0.50</td>
+          </tr>
+          <tr>
+            <td>Green Peppers  <span style="font-size:0.8em; color: gray;"> - Just for Steaks - </span></td>
+            <td>+0.50</td>
+          </tr>
+          <tr>
+            <td>Onions  <span style="font-size:0.8em; color: gray;"> - Just for Steaks - </span></td>
+            <td>+0.50</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}

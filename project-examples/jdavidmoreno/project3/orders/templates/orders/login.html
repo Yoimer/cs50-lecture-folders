@@ -1,0 +1,25 @@
+{% extends "orders/base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <h3>Start ordering Pizza from Home</h3>
+    <div class="row justify-content-center">
+      <div class="col-5">
+        <form action="{% url 'login' %}" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="login-input">Username</label>
+            <input type="text" name="username" class="form-control" placeholder="Enter Username" id="login-input">
+          </div>
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <input type="password" name="password" class="form-control " placeholder="Enter Password" id="login-password">
+          </div>
+          <button class="btn btn-primary" type="submit">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+nav {
+    height: 40px;
+    background-color: silver;
+}
+
+nav a {
+    color: black;
+}
+
+.home-btn {
+    margin-left: 50px;
+}
+
+.register-btn {
+    float: right;
+    margin-right: 50px;
+}
+
+.margin-center {
+    text-align: center;
+    margin-top: 40px;
+}
+
+
+section {
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 100px;
+    text-align: center;
+}
+
+

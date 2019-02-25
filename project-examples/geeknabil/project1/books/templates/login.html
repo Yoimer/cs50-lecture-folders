@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    login
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}?q=8">
+{% endblock %}
+
+{% block body %}
+    <nav>
+        <a href="{{ url_for('index') }}"><button class="btn btn-light home-btn">Home</button></a>
+        <a href="{{ url_for('register') }}"><button class="btn btn-light register-btn">Register</button></a>
+    </nav>
+    <div class="container">
+        <br>
+        <h4 class="text-center text-danger">{{ mess }}</h4>
+        <h5 class="margin-center">Just Login {{again}}!</h5>
+        <section>
+            <form action="{{ url_for('login') }}" method="post">
+                <input class="form-control" type="email" placeholder="email" name="email" required>
+                <br>
+                <input class="form-control" type="password" placeholder="Password" name="password" required>
+                <br>
+                <button class="btn btn-primary">Login</button>
+            </form>
+        </section>
+    </div>
+{% endblock %}

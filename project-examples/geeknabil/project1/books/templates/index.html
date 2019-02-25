@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}?q=32">
+{% endblock %}
+
+{% block body %}
+    {% if logout %}
+        <nav>
+            <a href="#"><button class="btn btn-light home-btn">Home</button></a>
+            <a href="{{ url_for('register') }}"><button class="btn btn-light register-btn">Register</button></a>
+            <a href="{{ url_for('login') }}"><button class="btn btn-light login-btn">Login</button></a>
+        </nav>
+    {% else %}
+        <nav>
+            <a href="#"><button class="btn btn-light home-btn">Home</button></a>
+            <a href="{{ url_for('logout', to_page='index') }}"><button class="btn btn-light logout-btn">Logout</button></a>
+            <a href="{{ url_for('search') }}"><button class="btn btn-light search-btn">Search</button></a>
+            <a class="username" href="{{ url_for('index') }}">{{username}}</a>
+        </nav>
+    {% endif %}
+    <div class="container">
+        <header>
+            <h1>Read-book</h1>
+            <h3>This is a Book Review Website!</h3>
+        </header>
+        <br>
+        {% if logout %}
+            <section>
+                <div class="row" style="padding-left: 50px">
+                    <p>It's free, <span class="bold-text">Create Account</span> to Search for books, Read and See Reviews ....</p>
+                    <br><br>
+                    <div class="col-6-lg">
+                        <span class="big-text">Create Account.</span>
+                        <br>
+                        <a href="{{ url_for('register') }}"><button class="btn text-center">register</button></a>
+                    </div>
+                    <div class="col-6-lg" style="margin-left: 200px">
+                        <span class="big-text">I already have one.</span>
+                        <br>
+                        <a href="{{ url_for('login') }}"><button class="btn text-center">login</button></a>
+                    </div>
+                </div>
+
+            </section>
+        {% else %}
+            <p class="text-center">It's free, <span class="bold-text">Click</span> to Search for books, Read and See Reviews ....</p>
+            <div class="text-center">
+                <a href="{{ url_for('search') }}"><button class="btn">Search</button></a>
+            </div>
+            <br><br>
+            <p class="text-center">This secion will be updated soon</p>
+        {% endif %}
+    </div>
+{% endblock %}

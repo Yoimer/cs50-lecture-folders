@@ -1,0 +1,178 @@
+
+{% extends "orders/base.html" %}
+
+
+{% block title %}Menu{% endblock %}
+
+{% block body %}
+  <h1>Our Pizzas</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-8">
+        <h5>Regular Pizzas</h5>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-10">
+              <table class="table">
+                <tr>
+                  <th></th>
+                  <th>Small</th>
+                  <th>Large</th>
+                </tr>
+                {% for element in regular_pizzas %}
+                <tr>
+                  <td>{{ element.pizza }}</td>
+                  <td>{{ element.small }}&nbsp&nbsp{% if user.is_authenticated %}{% csrf_token %}<button data-number="{% if forloop.counter0 == 4 %}{{ forloop.counter0|add:"1" }}{% else %}{{ forloop.counter0 }}{% endif %}" data-dish="{{ element.pizza }}" data-type="Regular Pizza" data-size="Small" data-price="{{ element.small }}" type="submit" class="btn btn-secondary btn-sm" {% if forloop.counter0 != 0 %}data-toggle="modal" data-target="#addToppings"{% endif %}>{% if forloop.counter0 == 0 %}Add Cart
+                    {% elif forloop.counter0 == 1 %}Choose Topping{% else %}Choose Toppings{% endif %}</button>{% endif %}</td>
+                  <td>{{ element.large }}&nbsp&nbsp{% if user.is_authenticated %}{% csrf_token %}<button data-number="{% if forloop.counter0 == 4 %}{{ forloop.counter0|add:"1" }}{% else %}{{ forloop.counter0 }}{% endif %}" data-dish="{{ element.pizza }}" data-type="Regular Pizza" data-size="Large" data-price="{{ element.large }}" type="submit" class="btn btn-secondary btn-sm" {% if forloop.counter0 != 0 %}data-toggle="modal" data-target="#addToppings"{% endif %}>{% if forloop.counter0 == 0 %}Add Cart
+                    {% elif forloop.counter0 == 1 %}Choose Topping{% else %}Choose Toppings{% endif %}</button>{% endif %}</td>
+                </tr>
+                {% endfor %}
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <h5>Sicilian Pizzas</h5>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-10">
+              <table class="table">
+                <tr>
+                  <th></th>
+                  <th>Small</th>
+                  <th>Large</th>
+                </tr>
+                {% for element in sicilian_pizzas %}
+                <tr>
+                  <td>{{ element.pizza }}</td>
+                  <td>{{ element.small }}&nbsp&nbsp{% if user.is_authenticated %}{% csrf_token %}<button data-number="{% if forloop.counter0 == 4 %}{{ forloop.counter0|add:"1" }}{% else %}{{ forloop.counter0 }}{% endif %}" data-dish="{{ element.pizza }}" data-type="Sicilian Pizza" data-size="Small" data-price="{{ element.small }}" type="submit" class="btn btn-secondary btn-sm" {% if forloop.counter0 != 0 %}data-toggle="modal" data-target="#addToppings"{% endif %}>{% if forloop.counter0 == 0 %}Add Cart
+                  {% elif forloop.counter0 == 1 %}Choose Topping{% else %}Choose Toppings{% endif %}</button>{% endif %}</td>
+                  <td>{{ element.large }}&nbsp&nbsp{% if user.is_authenticated %}{% csrf_token %}<button data-number="{% if forloop.counter0 == 4 %}{{ forloop.counter0|add:"1" }}{% else %}{{ forloop.counter0 }}{% endif %}" data-dish="{{ element.pizza }}" data-type="Sicilian Pizza" data-size="Large" data-price="{{ element.large }}" type="submit" class="btn btn-secondary btn-sm"  {% if forloop.counter0 != 0 %}data-toggle="modal" data-target="#addToppings"{% endif %}>{% if forloop.counter0 == 0 %}Add Cart
+                  {% elif forloop.counter0 == 1 %}Choose Topping{% else %}Choose Toppings{% endif %}</button>{% endif %}</td>
+                </tr>
+                {% endfor %}
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <h5>Our Fantastic Toppings!</h5>
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-10">
+              <table class="table">
+                {% for element in toppings %}
+                <tr>
+                  <td>{{ element.topping }}</td>
+                </tr>
+                {% endfor %}
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="addToppings" tabindex="-1" role="dialog" aria-labelledby="Add Toppings to Your Pizza" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">It's Time for Toppings!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Choose your favourites toppings for your Pizza</p>
+            <div class="form-group col-4" id="selectors_box">
+              <select class="selector" class="form-control">
+                {% for option in toppings %}
+                <option value="{{ option.id }}">{{ option.topping }}</option>
+                {% endfor %}
+              </select>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="addToCart">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+
+    let selector = document.querySelector('.selector');
+    let buttons = document.querySelectorAll('.btn-secondary');
+    let selectors_box = document.querySelector('#selectors_box');
+    buttons.forEach(button => {
+      button.onclick = function() {
+
+        let number = this.dataset.number;
+
+        if ( number != 0) {
+          while (selectors_box.childNodes.length > 2) {
+            selectors_box.removeChild(selectors_box.lastChild);
+          }
+
+          for (let j = 0; j < (number - 1); j++) {
+            selectors_box.appendChild(selector.cloneNode(true));
+          }
+
+          let csrf = button.previousSibling.value;
+          let data = new FormData();
+          data.append("dish", this.dataset.dish);
+          data.append("type", this.dataset.type);
+          data.append("size", this.dataset.size);
+          data.append("price", this.dataset.price);
+
+          document.querySelector('#addToCart').onclick = function() {
+
+            let request = new XMLHttpRequest;
+            let counter = 0;
+            selectors_box.childNodes.forEach( option => {
+
+              if (option.className == 'selector'){
+                data.append("toppings" + counter, option.value);
+                counter++;
+              }
+            });
+
+            request.open('POST', '/added');
+            request.setRequestHeader('X-CSRFToken', csrf);
+
+            request.send(data);
+            document.querySelector('.modal-footer').childNodes[1].click();
+
+            request.onload = () => {
+              let data = JSON.parse(request.responseText);
+              document.querySelector('#cart').src = "/static/orders/img/Shopping-Cart-icon-active.png";
+            }
+          }
+        }else{
+          let csrf = this.previousSibling.value;
+
+          let request = new XMLHttpRequest;
+          let data = new FormData();
+          data.append("dish", this.dataset.dish);
+          data.append("type", this.dataset.type);
+          data.append("size", this.dataset.size);
+          data.append("price", this.dataset.price);
+
+          request.open('POST', '/added');
+          request.setRequestHeader('X-CSRFToken', csrf);
+          request.send(data);
+
+          request.onload = () => {
+            let data = JSON.parse(request.responseText);
+            document.querySelector('#cart').src = "/static/orders/img/Shopping-Cart-icon-active.png";
+        }
+      }
+    }
+    });
+  });
+  </script>
+{% endblock %}

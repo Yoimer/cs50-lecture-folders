@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block main %}
+  {% if not user %}
+  <h1 class="display-3">Like to Read?</h1>
+  <br>
+  <br>
+  <img class="img-fluid" src="https://www.timeshighereducation.com/sites/default/files/styles/the_breaking_news_image_style/public/row-of-books-stacked-side-by-side.jpg?itok=0-hDr-72" alt="Like to Read?">
+  <br>
+  <br>
+  <br>
+  <h3 class="display-4">Then say Hello to our Curated Selection</h3>
+  <p class="lead">More than 5.000 special editions reviewd by millions of readers from all over the World</p>
+  <br>
+  <br>
+  <img class="img-fluid" src="https://www.twincities.com/wp-content/uploads/2017/09/books-reading-library.jpg" alt="Selection of Books">
+  <br>
+  <br>
+  <h3 class="display-4">Create an Account in one Step</h3>
+  <p class="lead"><a href="/register" alt="Create Account">Register</a></p>
+  <div style="height: 70px;"></div>
+  {% endif %}
+  {% if user %}
+    <h1 class="display-3">Hi {{ user }}, welcome to NiceBooks</h1>
+    <br>
+    <br>
+    <img class="img-fluid" src="https://www.isbc.ac.in/images/facultys/Top-10-books-blog-banner.png" alt="Read?">
+    <br>
+    <br>
+    <h3 class="display-4">Here you have our Fantastic Selection</h3>
+    <p class="lead"><a href="/search" alt="search">Start Browsing</a></p>
+    <img class="img-fluid" src="https://img.etimg.com/thumb/msid-64290628,width-643,imgsize-247302,resizemode-4/millennials-dispel-stereotype-prefer-physical-books-over-digital-versions.jpg" alt="Selection of Books">
+    <br>
+    <br>
+  {% endif %}
+  {% if message %}
+    {{ message }}
+  {% endif %}
+{% endblock %}

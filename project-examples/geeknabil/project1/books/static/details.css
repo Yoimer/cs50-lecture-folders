@@ -1,0 +1,32 @@
+/* navbar style */
+nav {
+  height: 40px;
+  background-color: silver;
+}
+
+nav a {
+    color: black;
+}
+
+.home-btn {
+  margin-left: 50px; }
+
+.search-btn, .logout-btn, .login-btn, .register-btn {
+  float: right;
+  margin-right: 30px; }
+
+.username {
+  float: right;
+  margin-right: 30px;
+  margin-top: 10px;
+}
+/* end navbar style */
+
+.beside {
+  display: flex;
+}
+
+.to-right {
+  margin-left: 300px;
+  margin-top: 5px;
+}

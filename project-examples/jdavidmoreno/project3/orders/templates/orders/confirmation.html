@@ -1,0 +1,73 @@
+{% extends "orders/base.html" %}
+
+{% load static %}
+
+{% block title %}Confirmation{% endblock %}
+
+{% block body %}
+  <h1>Confirmed Items</h1>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-11">
+        <div class="container cart" id="main_container">
+          <div class="row header">
+            <div class="col">Item</div>
+            <div class="col">Type</div>
+            <div class="col">Size</div>
+            <div class="col">Toppings</div>
+            <div class="col">Additions</div>
+            <div class="col">Price</div>
+
+          </div>
+          {% for confirmed in confirmations %}
+            <div class="row cart-row">
+              <div class="col">{{ confirmed.dish }}</div>
+              <div class="col">{% if confirmed.pizza_type is not None %}{{ confirmed.pizza_type }}{% endif %}</div>
+              <div class="col">{% if confirmed.size is not None %}{{ confirmed.size }}{% else %}&nbsp{% endif %}</div>
+              <div class="col">{% for topping in confirmed.pizza_toppings.all %}{{ topping }}<br>{% if toppings == ''  %}&nbsp{% endif %}{% endfor %}</div>
+              <div class="col">{% for addition in confirmed.sub_additions.all %}{{ addition }}<br>{% endfor %}</div>
+              <div class="col price">{{ confirmed.price }}</div>
+
+            </div>
+          {% endfor %}
+          <div class="row">
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col" style="font-weight: bold;">Total</div>
+
+          </div>
+          <div class="row">
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col" id="total"></div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function makeSum() {
+      let total = 0;
+      let prices = Array.from(document.getElementsByClassName('price'));
+
+      prices.forEach(price => {
+        let sum = parseFloat(price.innerHTML);
+        total += sum;
+      });
+      document.querySelector('#total').innerHTML = total.toFixed(2);
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+      makeSum()
+    });
+  </script>
+{% endblock %}

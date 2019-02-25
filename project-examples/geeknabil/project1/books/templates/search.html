@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='search.css') }}?q=9">
+{% endblock %}
+
+
+{% block body %}
+    {% if logout %}
+        <nav>
+            <a href="#"><button class="btn btn-light home-btn">Home</button></a>
+            <a href="{{ url_for('register') }}"><button class="btn btn-light register-btn">Register</button></a>
+            <a href="{{ url_for('login') }}"><button class="btn btn-light login-btn">Login</button></a>
+        </nav>
+    {% else %}
+        <nav>
+            <a href="{{ url_for('index') }}"><button class="btn btn-light home-btn">Home</button></a>
+            <a href="{{ url_for('logout', to_page='search') }}"><button class="btn btn-light logout-btn">Logout</button></a>
+            <a class="username" href="{{ url_for('index') }}">{{username}}</a>
+        </nav>
+    {% endif %}
+    <div class="container">
+        {% if logout %}
+            <header>
+                <h4 class="text-center text-danger">Please login to search for your favourite books :(</h4>
+            </header>
+
+            <section>
+                <form action="{{ url_for('search') }}" method="post">
+                    <div class="form-group">
+                        <input class="form-control" type="text" placeholder="Search with isbn, title or even author" name="search" required>
+                        <button class="btn">Search</button>
+                    </div>
+                </form>
+            </section>
+            <br>
+            <div>
+                <ul>
+                    {% if no_books %}
+                        <h4 class="text-danger text-center">No matching result!</h4>
+                    {% else %}
+                        {% for book in books %}
+                            <li><a href="{{ url_for('book', book_id=book.id) }}">{{book.isbn}}, {{book.title}}, {{ book.author }}.</a></li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+
+        {% else %}
+            <header>
+                <h4 class="text-center">Search for your favourite book :)</h4>
+            </header>
+
+            <section>
+                <form action="{{ url_for('search') }}" method="post">
+                    <div class="form-group">
+                        <input class="form-control" type="text" placeholder="Search with isbn, title or even author" name="search" required>
+                        <button class="btn">Search</button>
+                    </div>
+                </form>
+            </section>
+            <br>
+            <div>
+                <ul>
+                    {% if no_books %}
+                        <h4 class="text-danger text-center">No matching result!</h4>
+                    {% else %}
+                        {% for book in books %}
+                            <li><a href="{{ url_for('book', book_id=book.id) }}">{{book.isbn}}, {{book.title}}, {{ book.author }}.</a></li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

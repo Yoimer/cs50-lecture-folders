@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}Search Book{% endblock %}
+
+{% block main %}
+  <h3>Search by Book Title, ISBN, Author or Year</h3>
+  <form action="/search" method="post">
+    <div class="form-group">
+      <input type="text" name="query" class="form-control col-3" placeholder="Enter Title, Author, Year or ISBN" id="form-query">
+    </div>
+    <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+  <br>
+  {% if suggestions %}
+  <div class="container">
+    <ul>
+      {% for suggestion in suggestions %}
+        <li class="list-unstyled"><a href="/book/{{ suggestion.isbn }}" alt="{{ suggestion.isbn }}">Title: {{ suggestion.title }},
+          Author: {{ suggestion.name }}, Year: {{ suggestion.year }}, Isbn {{ suggestion.isbn }}.</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% else %}
+    {% if nothing %}
+    {% else %}
+      <h3>Sorry, we didn't find any result for '{{ query }}'</h3>
+    {% endif %}
+  {% endif %}
+{% endblock %}

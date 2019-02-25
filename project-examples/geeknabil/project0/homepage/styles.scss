@@ -1,0 +1,123 @@
+img {
+    border: 1px solid white;
+    border-radius: 50%;
+
+}
+
+@media(max-width:767px){
+    img {
+        width: 40%;
+        display: block;
+        margin: auto;
+    }
+
+    .add-margin {
+        text-align: center;
+    }
+
+    .social-icons {
+        float: left;
+        width: 50px;
+        height: 50px;
+        margin: 10px;
+    }
+}
+@media(min-width:768px){
+    img {
+        width: 40%;
+        display: block;
+        margin: auto;
+    }
+
+    .add-margin {
+        text-align: center;
+    }
+
+    .social-icons {
+        float: left;
+        width: 50px;
+        height: 50px;
+        margin: 10px;
+    }
+}
+@media(min-width:992px){
+    img {
+        width: 80%;
+        display: block;
+        margin: auto;
+    }
+
+    .add-margin {
+        text-align: left;
+    }
+
+    .social-icons {
+        float: right;
+        width: 50px;
+        height: 50px;
+        margin: 10px;
+    }
+
+}
+@media(min-width:1200px){
+    img {
+        width: 70%;
+        display: block;
+        margin: auto;
+    }
+
+    .add-margin {
+        text-align: left;
+    }
+
+    .social-icons {
+        float: right;
+        width: 50px;
+        height: 50px;
+        margin: 10px;
+    }
+
+}
+
+#title {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#sub-title {
+    text-align: center;
+}
+
+
+nav {
+    margin-top: 50px;
+    text-align: center;
+}
+
+nav a:hover{
+    text-decoration: none;
+}
+
+.btn {
+    margin: 10px;
+}
+
+.add-margin {
+    margin-top: 50px;
+}
+
+section {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+footer {
+    text-align: center;
+
+}
+.social-icons {
+    float: right;
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+}

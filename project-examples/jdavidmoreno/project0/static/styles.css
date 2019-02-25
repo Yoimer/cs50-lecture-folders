@@ -1,0 +1,57 @@
+img, h1, h2, h3, h4, h5, h6 {
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: 4rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: black;
+}
+
+img {
+  border-radius: 5px;
+}
+
+p, small {
+  text-align: center;
+  color: darkgray;
+}
+
+td, th {
+  max-width: 20%;
+}
+td img, th img {
+  width: 80%;
+}
+
+.wide {
+  width: 100%;
+}
+
+#big-title {
+  margin-top: 7rem;
+  color: #7dbef5;
+}
+
+#main-table img {
+  margin: 0;
+}
+
+@media screen and (max-width: 576px) {
+  #big-title {
+    font-size: 3rem;
+  }
+
+  #main-table tr > *:nth-child(3) {
+    display: none;
+  }
+}
+#azulejos {
+  margin: 0;
+}
+
+div.guides {
+  background-color: lightgray;
+}
+
+/*# sourceMappingURL=styles.css.map */

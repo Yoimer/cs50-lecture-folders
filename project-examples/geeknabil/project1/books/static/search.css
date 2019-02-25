@@ -1,0 +1,52 @@
+header {
+  text-align: center;
+  margin-top: 20px;
+}
+
+section {
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 50px;
+  text-align: center;
+}
+
+
+nav {
+  height: 40px;
+  background-color: silver;
+}
+
+nav a {
+    color: black;
+}
+
+.home-btn {
+  margin-left: 50px; }
+
+.username {
+  float: right;
+  margin-right: 30px;
+  margin-top: 10px;
+}
+
+.logout-btn, .login-btn, .register-btn {
+  float: right;
+  margin-right: 30px;
+}
+
+
+form {
+    margin: 0 auto;
+    margin-top: 100px;
+    width: 50%;
+    text-align: center;
+}
+
+form button {
+    margin-top: 3px;
+}
+
+form button:hover {
+    background-color: blue;
+    color: white;
+}

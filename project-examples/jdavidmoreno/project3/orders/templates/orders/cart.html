@@ -1,0 +1,154 @@
+{% extends "orders/base.html" %}
+
+{% load static %}
+
+{% block title %}Cart{% endblock %}
+
+{% block body %}
+  <h1>Cart</h1>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-11">
+        <div class="container cart" id="main_container">
+          <div class="row header">
+            <div class="col">Item</div>
+            <div class="col">Type</div>
+            <div class="col">Size</div>
+            <div class="col">Toppings</div>
+            <div class="col">Additions</div>
+            <div class="col">Price</div>
+            <div class="col-1"></div>
+          </div>
+          {% for order in orders %}
+            <div class="row cart-row">
+              <div class="col">{{ order.dish }}</div>
+              <div class="col">{% if order.pizza_type is not None %}{{ order.pizza_type }}{% endif %}</div>
+              <div class="col">{% if order.size is not None %}{{ order.size }}{% else %}&nbsp{% endif %}</div>
+              <div class="col">{% for topping in order.pizza_toppings.all %}{{ topping }}<br>{% if toppings == ''  %}&nbsp{% endif %}{% endfor %}</div>
+              <div class="col">{% for addition in order.sub_additions.all %}{{ addition }}<br>{% endfor %}</div>
+              <div class="col price">{{ order.price }}</div>
+              <div class="col-1">{% csrf_token %}<img width="15px" data-id="{{ order.id }}" class="cancel" height="15px" src="{% static 'orders/img/x-icon.png' %}"></div>
+            </div>
+          {% endfor %}
+          <div class="row">
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col" style="font-weight: bold;">Total</div>
+            <div class="col-1"></div>
+          </div>
+          <div class="row">
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col" id="total"></div>
+            <div class="col-1"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row justify-content-end" >
+      <div class="col-4"  style="visibility: hidden;" id="submit">
+
+        <form  action="{% url 'checkout' %}" method="POST">
+          {% csrf_token %}
+          <input id="amount" type="hidden" name="amount" value="">
+          <input  type="hidden" name="username" value="{{ user.username }}">
+          <script
+            id="stripe"
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="pk_test_TYooMQauvdEDq54NiTphI7jx"
+            data-amount=""
+            data-name="Pinochio's Pizza"
+            data-description=""
+            data-image="{% static 'orders/img/Pinocchios-icon-small.png' %}"
+            data-locale="auto"
+            data-zip-code="true">
+          </script>
+        </form>
+      </div>
+
+    </div>
+  </div>
+  <script>
+    function makeSum() {
+      let total = 0;
+      let prices = Array.from(document.getElementsByClassName('price'));
+
+      prices.forEach(price => {
+        let sum = parseFloat(price.innerHTML);
+        total += sum;
+      });
+      document.querySelector('#total').innerHTML = total.toFixed(2);
+
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+      /*if (document.querySelector('#main_container').childNodes.length < 8) {
+        document.querySelector('.stripe-button-el').setAttribute('style', 'visibility: hidden !important;');
+      }*/
+
+      makeSum()
+      let cancels = document.querySelectorAll('.cancel');
+
+      cancels.forEach(cancel => {
+        cancel.onmouseover = () => {
+          cancel.style.cursor = 'pointer';
+        }
+      })
+
+      // If hide button is clicked, delete the post.
+      document.addEventListener('click', event => {
+          const element = event.target;
+          if (element.className === 'cancel') {
+            element.parentNode.parentNode.style.animationPlayState = 'running';
+            let request = new XMLHttpRequest;
+            let crsf = element.previousSibling.value;
+            let data = new FormData();
+            data.append('id', element.dataset.id);
+
+            element.parentNode.parentNode.addEventListener('animationend', () =>  {
+            element.parentNode.parentNode.remove();
+            makeSum()
+
+            //if (document.querySelector('#main_container').childNodes.length < 8) {
+            if (document.querySelector('.cart-row') == null ){
+              console.log('Its 11');
+              document.querySelector('#cart').src = "{% static 'orders/img/Shopping-Cart-icon.png' %}";
+              //document.querySelector('#submit').style.visibility = 'hidden';
+              data.append('no_content', 'no_content');
+            }
+
+            request.open('POST', '/delete');
+            request.setRequestHeader('X-CSRFToken', crsf);
+            request.send(data);
+
+            request.onload = () => {
+              let response = JSON.parse(request.responseText);
+
+
+              console.log(response);
+            }
+
+
+            });
+          }
+          if (element == document.querySelector('.stripe-button-el').firstChild) {
+            makeSum();
+            let stripe = document.querySelector('#stripe');
+            stripe.dataset.amount = document.querySelector('#total').innerHTML;
+            let pre = document.querySelector('#total').innerHTML;
+            document.querySelector('#amount').value = parseFloat(pre).toFixed(2) * 100;
+          
+          }
+      });
+    });
+  </script>
+{% endblock %}

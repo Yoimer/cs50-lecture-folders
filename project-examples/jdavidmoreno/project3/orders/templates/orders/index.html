@@ -1,0 +1,26 @@
+{% extends "orders/base.html" %}
+{% load static %}
+
+{% block title %}Welcome to Pinochio's{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <img style="max-height: 20rem;" class="img-fluid" src="{% static 'orders/img/hellopizza.png' %}" alt="Hello Pizza!">
+    </div>
+  </div>
+  <h3>Probably the Best Pizza in Harvard's Arounds</h3>
+  <p class="center">Ready for enjoy authentic Pizza?
+  In our restaurant you'll have everything from Napoletanian to Sicilian Pizzas,<br>
+   and also Vegetarian Options!</p>
+  <p class="text-center"><a href="{% url 'pizzas' %}" alt="Discover our Pizzas">Discover our Pizzas</a></p>
+  <br>
+  <br>
+  <h3>Don't forget Our Subs!</h3>
+  <p class="center">Here you have <a href="{% url 'subs' %}" alt="Our Subs!">some of them</a><p>
+  <br>
+  <br>
+  <div class="container-fluid" >
+    <img style="width: 100%; height: 20em; object-fit: cover;" src="https://d1725r39asqzt3.cloudfront.net/d2c99700-efc5-48bc-8b93-8fb544e4b596/orig.jpg" alt="Good Pizza">
+  </div>
+{% endblock %}

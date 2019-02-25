@@ -1,0 +1,55 @@
+{% extends "orders/base.html" %}
+{% load static %}
+{% block title %}Our Subs{% endblock %}
+
+{% block body %}
+  <h1>Pasta</h1>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-10">
+        <table class="table">
+          <tr>
+            <th></th>
+            <th>Price</th>
+          </tr>
+          {% for element in pasta %}
+          <tr>
+            <td>{{ element.pasta }}</td>
+            <td>{{ element.price }}&nbsp&nbsp{% if user.is_authenticated %}{% csrf_token %}<button data-dish="{{ element.pasta }}" data-type="" data-size="" data-price="{{ element.price }}" type="button" class="btn btn-secondary btn-sm">Add Cart</button>{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </div>
+  <script >
+  document.addEventListener("DOMContentLoaded", () => {
+
+    let buttons = document.querySelectorAll('.btn-secondary');
+    buttons.forEach(button => {
+      button.onclick = function() {
+
+        let crsf = this.previousSibling.value;
+
+        let request = new XMLHttpRequest;
+        let data = new FormData();
+        data.append("dish", this.dataset.dish);
+        data.append("type", this.dataset.type);
+        data.append("size", this.dataset.size);
+        data.append("price", this.dataset.price);
+
+        request.open('POST', '/added');
+        request.setRequestHeader('X-CSRFToken', crsf);
+        request.send(data);
+
+        request.onload = () => {
+          let data = JSON.parse(request.responseText);
+          document.querySelector('#cart').src = "/static/orders/img/Shopping-Cart-icon-active.png";
+          console.log(data);
+        }
+
+      }
+    });
+  });
+  </script>
+{% endblock %}

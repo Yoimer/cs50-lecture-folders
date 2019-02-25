@@ -1,0 +1,46 @@
+/* navbar style */
+nav {
+  height: 40px;
+  background-color: silver;
+}
+
+nav a {
+    color: black;
+}
+
+.home-btn {
+  margin-left: 50px; }
+
+.login-btn, .register-btn,.search-btn, .logout-btn {
+  float: right;
+  margin-right: 30px; }
+
+.username {
+  float: right;
+  margin-right: 30px;
+  margin-top: 10px;
+}
+/* end navbar style*/
+
+header {
+  text-align: center;
+  margin-top: 20px; }
+
+section {
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 50px;
+  text-align: center; }
+
+.bold-text {
+  font-weight: bold; }
+
+.big-text {
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
+/*# sourceMappingURL=styles.css.map */

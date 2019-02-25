@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block main %}
+  <h3>Create a New Account</h3>
+  <br>
+  
+  <form action="/register" method="post">
+    <div class="form-group">
+      <label for="login-username">Username</label>
+      <input id="login-username" class="form-control col-3" type="text" name="name" placeholder="Enter your Username">
+      <label for="login-password">Password</label>
+      <input id="login-password" class="form-control col-3" type="password" name="password" placeholder="Enter your Password">
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+  {% if error %}
+    <h3 class="error">{{ error }}</h3>
+  {% endif %}
+  {% if message %}
+    <h3 class="message">{{ message }}</h3>
+  {% endif %}
+{% endblock %}

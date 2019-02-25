@@ -1,0 +1,89 @@
+{% extends "orders/base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <h1 class="display-1">Hello</h1>
+    <h3 style="letter-spacing: 3px;">To Those Who Love Pizza!!</h3>
+    <div class="row justify-content-center">
+      <div class="col-4">
+        <form action="{% url 'register' %}" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="login-input">Username</label>
+            <input type="text" name="username" class="form-control" placeholder="PizzaLover12" id="register-username">
+            <div class="invalid-feedback">Field can not be empty</div>
+          </div>
+          <div class="form-group">
+            <label for="login-input">First Name</label>
+            <input type="text" name="first_name" class="form-control" placeholder="Mr Pizza" id="register-first">
+            <div class="invalid-feedback">Field can not be empty</div>
+          </div>
+          <div class="form-group">
+            <label for="login-input">Last Name</label>
+            <input type="text" name="last_name" class="form-control" placeholder="Parmiggiano" id="register-last">
+            <div class="invalid-feedback">Field can not be empty</div>
+          </div>
+          <div class="form-group">
+            <label for="login-input">Email</label>
+            <input type="text" name="email" class="form-control" placeholder="pomodoro@pizzalove.com" id="register-email">
+            <div class="invalid-feedback">Field can not be empty</div>
+          </div>
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <input type="password" name="password" class="form-control " placeholder="Enter Password" id="register-pass">
+            <div class="invalid-feedback">Field can not be empty</div>
+          </div>
+          <div class="form-group">
+            <label for="login-password">Repeat Password</label>
+            <input type="password" name="password_repeat" class="form-control " placeholder="Password Again" id="register-pass2">
+            <div id="notMatch" class="invalid-feedback">Your password is not the same as above. Please try again</div>
+            <div class="invalid-feedback">Field can not be empty</div>
+          </div>
+          <button class="btn btn-primary" type="submit">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <script>
+    let inputs = document.querySelectorAll('.form-control');
+    inputs.forEach(input => {
+      input.onclick = () => {
+        input.nextElementSibling.style.display = 'none';
+      }
+    });
+
+    document.querySelector('#register-pass2').onclick = () => {
+      document.querySelector('#notMatch').style.display = "none";
+    }
+
+    function checkEmptyFields() {
+      let signal = 0;
+      inputs.forEach(input => {
+        if (input.value == ''){
+          input.nextElementSibling.style.display = 'block';
+          signal = 1
+        }
+      });
+      if (signal != 0){
+        return false;
+      }
+    }
+
+    function checkPassword() {
+      if (document.querySelector('#register-pass').value != document.querySelector('#register-pass2').value) {
+        document.querySelector('#notMatch').style.display = "block";
+        return false;
+      }
+    }
+
+    document.querySelector("form").onsubmit = () => {
+      if (checkPassword() == false || checkEmptyFields() == false) {
+        return false;
+      }
+    }
+  </script>
+{% endblock %}

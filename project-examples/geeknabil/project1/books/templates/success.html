@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block style %}
+    <meta http-equiv="refresh" content="{{sec}}; url={{ url_for(url) }}" />
+    <style>
+        body {
+            text-align: center;
+        }
+
+        h3 {
+            margin-top: 30px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h3>{{mess}}</h3>
+{% endblock %}
+

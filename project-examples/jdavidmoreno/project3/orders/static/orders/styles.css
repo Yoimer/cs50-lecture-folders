@@ -1,0 +1,63 @@
+h1, h2, h3, h4 ,h5{
+  text-align: center;
+  margin: 30px 0 20px 0;
+
+}
+
+p.center{
+  text-align: center;
+
+}
+
+input.form-control{
+  margin: 0 auto;
+}
+
+li.center{
+  margin-right: 7em;
+}
+
+ form.added{
+   display: inline;
+ }
+
+ @keyframes hide {
+   0% {
+       opacity: 1;
+       height: 100%;
+       line-height: 100%;
+       padding: 20px;
+       margin-bottom: 10px;
+   }
+   75% {
+       opacity: 0;
+       height: 100%;
+       line-height: 100%;
+       padding: 20px;
+       margin-bottom: 10px;
+   }
+   100% {
+       opacity: 0;
+       height: 0px;
+       line-height: 0px;
+       padding: 0px;
+       margin-bottom: 0px;
+   }
+ }
+
+
+div.cart > div{
+  border-bottom: 1px solid #dfe3e7;
+  animation-name: hide;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-play-state: paused;
+
+}
+
+
+
+div.cart div.header div {
+  font-weight: bold;
+
+}

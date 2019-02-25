@@ -1,0 +1,12 @@
+
+main{
+  text-align: center;
+}
+
+input.form-control{
+  margin: 0 auto;
+}
+
+ul li{
+  text-align: left !important;
+}
