@@ -1,0 +1,329 @@
+{% extends 'gotrees/base.html' %}
+
+{% load static %}
+
+{% block title %}Go Trees!{% endblock %}
+
+{% block body %}
+  <h1 style="margin-bottom: 10px; padding-bottom: 10px; font-weight: bold;" class="display-3"><span class="display-4">This is </span>Go<span style="color: seagreen;">Trees</span>!</h1>
+  <div style="position: relative;" id="image_container">
+    <img id="image_itself" src="{% static 'gotrees/img/main_image_2.jpg' %}" alt="Let's plant!" class="img" style="width: 100%; position: absolute;">
+    <div style="position: absolute; left: 50%;">
+      <div style="position: relative; left: -50%;">
+        <br>
+        <br>
+        <p class="center main">Imaging a Place..</p>
+        <p class="center main">where people could share all the trees they plant everyday,</p>
+        <p class="center main">at every momment,</p>
+        <p class="center main">and where every tree will remember who planted it.</p>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const cont = document.querySelector('#image_container');
+      const ima = document.querySelector('#image_itself');
+      cont.style.height = ima.height + 'px';
+
+      window.onresize = () => {
+        cont.style.height = ima.height + 'px';
+      }
+    });
+  </script>
+  <div class="container">
+    <div class="div_main">
+      <p class="center main">These are our latest Heroes!</p>
+      <p class="center main">People like you who is using their free time to help create a better World.</p>
+    </div>
+    {% for elem in last %}
+      <div class="row justify-content-center">
+        <div class="col-xm-12 col-md-10 col-lg-9">
+          <div class="row justify-content-center align-items-center">
+            <div class="col-2" style=" margin-right: 2rem; margin-left: 1rem; height: 6rem;">
+              <div style="background-color: #f8f9fa; width: 5rem; height: 5rem; vertical-align: middle; border-radius:100%; margin: 0 auto; display: inline-block; overflow: hidden;" >
+                <img class="img" style="object-fit: cover; width: 6rem; height: 6rem" src="../../static/gotrees/uploads/{{ elem.profile.image }}" alt="Who plated it?">
+              </div>
+            </div>
+            <div class="col-8" style="background-color: #f8f9fa; height: 6rem; border-radius: 5px; overflow:hidden;">
+              <span class="font-weight-light" style="; font-size:0.6rem;">
+                <p style="margin-bottom: 0.7rem;">{% if elem.time == 'Today' %}<span style="font-weight: bold !important;">{{ elem.time }}</span>{% else %}On {{ elem.time }}{% endif %} {{ elem.user.first_name }} planted a {% if elem.species %}<span style="color: SpringGreen;">{{ elem.species }}</span>{% else %}new Tree{% endif %}
+                {% if elem.name %}, and gave it the name <span style="color: SpringGreen;">{{ elem.name }}.</span>{% else %}.{% endif %}<br>
+                {% if elem.dedication %}{{ elem.user.first_name }} also share this:<br>
+                </p>
+                <p class="d-block text-muted mx-auto text-center font-italic col-md-12" >{{ elem.dedication }}</p><br>{% endif %}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    <br>
+    {% endfor %}
+    <div class="div_main">
+      <p class="center main">The Environment is something of all of us.</p>
+      <p class="center main">And these Companies are trying to Help too</p>
+      <p class="center main">so they can support this effort.</p>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-10">
+        <div class="card-columns">
+          <div class="card">
+            <img class="card-img-top" src="{% static 'gotrees/img/sample-1.png'%}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text"><small>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</small></p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted"></small>
+            </div>
+          </div>
+          <div class="card">
+            <img class="card-img-top" src="{% static 'gotrees/img/sample-2.jpg'%}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted"></small>
+            </div>
+          </div>
+          <div class="card">
+            <img class="card-img-top" src="{% static 'gotrees/img/sample-3.jpg'%}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted"></small>
+            </div>
+          </div>
+          <div class="card">
+            <img class="card-img-top" src="{% static 'gotrees/img/sample-2.jpg'%}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted"></small>
+            </div>
+          </div>
+          <div class="card">
+            <img class="card-img-top" src="{% static 'gotrees/img/sample-1.png'%}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text"><small>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</small></p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted"></small>
+            </div>
+          </div>
+          <div class="card">
+            <img class="card-img-top" src="{% static 'gotrees/img/sample-3.jpg'%}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted"></small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="div_main">
+      <p class="center main">Eager to see where in the World we've already planted?</p>
+      <p class="center main">Check out our Tree's Map</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        {% csrf_token %}
+        <div id="canvas_map" style="height: 40rem;"></div>
+      </div>
+    </div>
+  </div>
+  <div class="div_main">
+    <p class="center main">Join this community of amazing people</p>
+    <p class="center main">It's completely free</p>
+    <p class="center main"><span style="color: yellowGreen;"><a href="{% url 'register' %}" alt="Create Free Account" >Create Your Forest Account</a></span></p>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let map;
+      let markers = [];
+      let info = new google.maps.InfoWindow();
+      let csrf = document.querySelector('#canvas_map').previousSibling.previousSibling.value;
+      let canvas = document.querySelector('#canvas_map');
+
+
+      function initMap() {
+
+        let styles = [
+        ];
+
+        let options = {
+            center: {lat: 40.4167, lng: -3.7032}, // Madrid Spain
+            disableDefaultUI: true,
+            mapTypeId: 'satellite',
+            maxZoom: 20,
+            panControl: true,
+            styles: styles,
+            zoom: 13,
+            zoomControl: true
+        };
+
+        map = new google.maps.Map(canvas, options);
+        let geo_info = new google.maps.InfoWindow({map: map});
+
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            map.setCenter(pos);
+
+          }, function() {
+            handleLocationError(true, geo_info, map.getCenter());
+          });
+        } else {
+          handleLocationError(false, geo_info, map.getCenter());
+        }
+
+        google.maps.event.addListenerOnce(map, "idle", configure);
+      }
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                                  'Error: The Geolocation service failed.' :
+                                  'Error: Your browser doesn\'t support geolocation.');
+      }
+
+      function setMapNull() {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(null);
+        }
+        markers = []
+      }
+
+
+      function addMarker(data) {
+        let list = [{a: 0, b: 0}, {a: 65, b: 65}, {a: 65, b: 0}, {a: 0, b: 65}]
+        let n = parseInt(data.kind);
+        var image = {
+          url: '../../static/gotrees/img/trees2.png',
+          size: new google.maps.Size(65, 70),
+          origin: new google.maps.Point(list[n]["a"], list[n]["b"]),
+          anchor: new google.maps.Point(32, 70)
+         };
+
+        var marker = new google.maps.Marker({
+          position: {lat: parseFloat(data.lat), lng: parseFloat(data.lng)},
+          map: map,
+          icon: image
+        });
+
+        let tree_image;
+        if (data.tree_image != ''){
+          tree_image = `<img style="max-width: 10rem;" class="img img-thumbnail" src="../../static/gotrees/uploads/${data.tree_image}">`;
+        } else {
+          tree_image = '';
+        }
+
+        let url = window.location.href
+        let content = `<div class="container">
+                          <div class="row">
+                            <div class="col-4">
+                              <br>
+                              <br>
+                              <p class="lead text-center">${data.name}</p>
+                              <p><strong>Specie:</strong></p>
+                              <p>${data.species}</p>
+                            </div>
+                            <div class="col-8">
+                              <br>
+                              <br>`+
+                               tree_image
+                            +`</div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12">
+                              <p><strong>Dedication:</strong></p>
+                            </div>
+                          </div>
+                          <div class="row justify-content-center">
+                            <div class="col-12">
+                              <p class="font-weight-light font-italic text-center">${data.dedication}</p>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-4">
+                              <img style="max-width: 4rem;" class="img img-thumbnail" src="../../static/gotrees/uploads/${data.image}">
+                            </div>
+                            <div class="col-8">
+                              <p><strong>&nbspPlanted with &#x1F49A on ${data.time} by :</strong></p>
+                              <a href="${url}${data.user}/myforest" alt="${data.first_name} Profile Page"><p>&nbsp${data.first_name}</p></a>
+                            </div>
+                          </div>
+                       </div>`;
+
+        marker.addListener('click', () => {
+          info.setContent(content);
+          info.open(map, marker);
+        });
+        markers.push(marker);
+      }
+
+      initMap();
+
+
+      function update() {
+
+        let bounds = map.getBounds();
+        let ne = bounds.getNorthEast();
+        let sw = bounds.getSouthWest();
+
+        let parameters = {
+          ne_lat: ne.lat(),
+          ne_lng: ne.lng(),
+          sw_lat: sw.lat(),
+          sw_lng: sw.lng()
+        };
+
+        AJAXRequest("/update", csrf, parameters).then(function(data) {
+          setMapNull();
+
+          for (let i = 0; i < data.length; i++)
+          {
+            addMarker(data[i]);
+          }
+        });
+      };
+
+      function configure()
+      {
+        map.addListener("idle", function() {
+          if (!info.getMap || !info.getMap())
+          {
+            update();
+          }
+        });
+
+        map.addListener("dragend", function() {
+            if (!info.getMap || !info.getMap())
+            {
+              update();
+            }
+        });
+
+        map.addListener("zoom_changed", function() {
+          update();
+        });
+
+        update();
+      }
+    });
+  </script>
+{% endblock %}

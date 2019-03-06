@@ -1,0 +1,288 @@
+{% extends "gotrees/base.html" %}
+
+{% load static %}
+
+{% block title %}Add a New Tree{% endblock %}
+
+{% block body %}
+  <h3>Ready to add your New Tree?</h3>
+  <div class="container">
+    <form action="{% url 'new_tree' user.username %}" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="lat" id="lat">
+      <input type="hidden" name="lng" id="lng">
+      <input type="hidden" name="photo" id="input_photo">
+      <input type="hidden" name="kind" id="tree_kind">
+      <div class="row justify-content-center">
+        <video class="col-md-8" id="video" style="max-height: 35rem; max-width: 40rem; cursor: pointer; display: none;" autoplay></video>
+        <canvas id="photo" style="display: none;"></canvas>
+      </div>
+      <br>
+      <div id="make_picture">
+        <img class="img mx-auto" style="max-width: 20%; display: block; cursor: pointer;" src="{% static 'gotrees/img/camera.jpg' %}" alt="Make a Photo of your Tree">
+        <h5>Click to Make Photo</h5>
+        <h6>We'll need this photo to make sure you planted the Tree<br>
+        <span style="font-weight: bold; color: yellowGreen;">Remember</span> to include your <span style="font-weight: bold; color: yellowGreen;">TreeCode in it!</span></h6>
+      </div>
+      <div class="row justify-content-center">
+        <button type="button" id="take_picture" class="btn btn-success" style="display: none;">Take Picture</button>
+        <button type="button" id="try_again" class="btn btn-secondary" style="display: none;">Try Again</button>
+      </div>
+      <br>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+          // Media
+          video = document.querySelector('#video');
+          canvas = document.querySelector('#photo');
+          photo = document.querySelector('#input_photo');
+
+          // Buttons
+          make_picture = document.querySelector('#make_picture');
+          take_picture = document.querySelector('#take_picture');
+          try_again = document.querySelector('#try_again');
+
+
+          function getDeviceReady() {
+            return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+          }
+
+          make_picture.onclick = () => {
+            if (getDeviceReady()) {
+              navigator.mediaDevices.getUserMedia({video: true}).then((stream) => {
+                video.style.display = 'block';
+                video.srcObject = stream;
+                take_picture.style.display = 'block';
+                make_picture.style.display = 'none';
+              });
+            } else {
+              canvas.style.background.color = "green";
+            }
+          }
+
+          document.addEventListener('click', event => {
+            if (event.target == take_picture || event.target == video) {
+              canvas.width = video.videoWidth;
+              canvas.height = video.videoHeight;
+              canvas.getContext('2d').drawImage(video, 0, 0);
+              video.srcObject.getTracks()[0].stop()
+              video.style.display = 'none';
+              canvas.style.display = 'block';
+
+              take_picture.style.display = 'none';
+              try_again.style.display = 'block';
+
+              let src = canvas.toDataURL('image/png');
+              photo.value = src;
+            }
+          })
+
+          try_again.onclick = () => {
+
+            if (getDeviceReady()) {
+              navigator.mediaDevices.getUserMedia({video: true}).then((stream) => {
+                video.srcObject = stream;
+                take_picture.style.display = 'block';
+                video.style.display = 'block';
+                canvas.style.display = 'none';
+                try_again.style.display = 'none';
+            })
+            }
+          }
+        });
+      </script>
+      <div class="row justify-content-center">
+        <div class="col-md-3">
+          <label for="form-tree_name">Give a name to your tree</label>
+          <input class="form-control" name="tree_name" type="text" id="form-tree_name" placeholder="Your Tree's Name" {% if tree_name %}value="{{ tree_name }}"{% endif %}>
+        </div>
+        <div class="col-md-3">
+          <label for="form-tree_kind">What species of tree is?</label>
+          <input class="form-control" name="tree_species" type="text" id="form-tree_kind" placeholder="Enter Tree's Species" {% if tree_kind %}value="{{ tree_kind }}"{% endif %}>
+        </div>
+      </div>
+      <br>
+      <div class="form-row justify-content-center">
+        <div class="form-group col-md-6">
+          <label for="form-tree_dedication">Do you want to dedicate it to someone, or write a reflection?</label>
+          <textarea maxlength="400" class="form-control" name="tree_dedication" id="form-tree_dedication" placeholder="Type here what makes you moove!" {% if tree_dedication %}value="{{ tree_dedication }}"{% endif %}>{% if tree_dedication %}{{ tree_dedication }}{% endif %}</textarea>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <h5>What kind of Tree are your Planting?</h5>
+      </div>
+      <div class="row justify-content-center">
+        <div><p id="show"></p></div>
+        <div id="not_empty" class="invalid-feedback"><p class="text-center">Field can not be empty</p></div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-1">
+          <img data-toggle="tooltip" data-placement="top" title="Conifer" data-kind="0" data-show="Conifer" src="{% static 'gotrees/img/transparent.png' %}" class="kind_tree" style="background: url({% static 'gotrees/img/trees2.png' %}) 0 0;" alt="Conifer">
+        </div>
+        <div class="col-md-1">
+          <img data-toggle="tooltip" data-placement="top" title="Deciduous Tree" data-kind="1" data-show="Deciduous Tree" src="{% static 'gotrees/img/transparent.png' %}" class="kind_tree" style="background: url({% static 'gotrees/img/trees2.png' %}) 65px 65px;" alt="Deciduous Tree">
+        </div>
+        <div class="col-md-1">
+          <img data-toggle="tooltip" data-placement="top" title="Evergreen Tree" data-kind="2" data-show="Evergreen Tree" src="{% static 'gotrees/img/transparent.png' %}" class="kind_tree" style="background: url({% static 'gotrees/img/trees2.png' %}) 65px 0;" alt="Evergreen Tree">
+        </div>
+        <div class="col-md-1">
+          <img data-toggle="tooltip" data-placement="top" title="Bush" data-kind="3" data-show="Bush" src="{% static 'gotrees/img/transparent.png' %}" class="kind_tree" style="background: url({% static 'gotrees/img/trees2.png' %}) 0 65px;" alt="Bush">
+        </div>
+      </div>
+      <br>
+
+      <div class="form-row justify-content-center">
+        <button type="submit" class="btn btn-primary">Plant it!</button>
+      </div>
+    </form>
+  </div>
+  <script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Enable the use of bootstrap tooltip on the profile bagges
+      $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      });
+
+      const input = document.querySelector('#tree_kind');
+      const kind = document.querySelectorAll('.kind_tree');
+      const show = document.querySelector('#show');
+      const not_empty = document.querySelector('#not_empty');
+
+      document.querySelectorAll('.kind_tree').forEach(element => {
+        element.onmouseover = () => {
+          element.style.bottom = '0';
+          element.style.top = '10px'
+        };
+
+        element.onmouseout = () => {
+          element.style.top = '0';
+          element.style.bottom = '10px';
+        };
+      });
+
+      document.addEventListener('click', event => {
+        if (event.target.className == 'kind_tree') {
+          not_empty.style.display = 'none';
+          input.value = event.target.dataset.kind;
+          show.innerHTML = '';
+          show.innerHTML = event.target.dataset.show;
+        };
+      });
+
+
+      function checkEmptyField() {
+        let signal = 0;
+        if (input.value == ''){
+          not_empty.style.display = 'block';
+          signal = 1
+        };
+        if (signal != 0){
+          return false;
+        }
+      }
+
+      document.querySelector("form").onsubmit = () => {
+        if (checkEmptyField() == false) {
+          return false;
+        }
+      }
+    });
+
+  </script>
+  <br>
+  <br>
+  <h5>We'll use your current location to set the tree on the Map at the correct place</h5>
+  <div class="container"></div>
+    <div class="row justify-content-center">
+      {% csrf_token %}
+      <div class="col-9" id="canvas_map" style="height: 30rem"></div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let map;
+
+
+
+      let input_lat = document.querySelector('#lat');
+      let input_lng = document.querySelector('#lng');
+
+
+      function initMap() {
+
+        let styles = [
+        ];
+
+        let options = {
+            center: {lat: 40.4167, lng: -3.7032}, // Madrid Spain
+            disableDefaultUI: true,
+            mapTypeId: 'satellite',
+            maxZoom: 20,
+            panControl: true,
+            styles: styles,
+            zoom: 13,
+            zoomControl: true
+        };
+
+        let canvas = document.querySelector('#canvas_map');
+
+        map = new google.maps.Map(canvas, options);
+        let geo_info = new google.maps.InfoWindow({map: map});
+        let geo_marker = new google.maps.Marker({
+          map: map,
+          icon: {url: '../../static/gotrees/img/person-icon-2.png'}
+        });
+
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            content = "<p>You're here!</p>"
+            geo_marker.setPosition(pos);
+            geo_marker.addListener('click', function(){
+              geo_info.setContent(content);
+              geo_info.open(map,geo_marker);
+            });
+            map.setCenter(pos);
+
+          }, function() {
+            handleLocationError(true, geo_info, map.getCenter());
+          });
+        } else {
+          handleLocationError(false, geo_info, map.getCenter());
+        }
+      }
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                                  'Error: The Geolocation service failed.' :
+                                  'Error: Your browser doesn\'t support geolocation.');
+      }
+
+
+
+
+      initMap();
+
+      if (navigator.geolocation) {
+
+        navigator.geolocation.watchPosition((position) => {
+          input_lat.value = position.coords.latitude;
+          input_lng.value = position.coords.longitude;
+
+        });
+      }
+
+    });
+
+  </script>
+{% endblock %}

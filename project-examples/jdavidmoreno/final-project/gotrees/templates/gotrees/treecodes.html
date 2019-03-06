@@ -1,0 +1,52 @@
+{% extends "gotrees/base.html" %}
+
+{% load static %}
+
+{% block title %}Get your TreeCodes{% endblock %}
+
+{% block body %}
+  <h3>Hey {{ user.first_name }}, You're almost there</h3>
+  <p class="text-center">Just let us know how many trees are you going to plant</p>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-xs-4">
+        <form action="{% url 'treecodes' %}" method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="number-input">Enter quantity <small>(Maximum 100 for each time)</small></label>
+            <input type="number" name="number" class="form-control" id="number-input" min="1" max="100">
+          </div>
+          <button class="btn btn-primary" type="submit">Generate TreeCodes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="container">
+    {% if codes %}
+      <h3>Congratulations!</h3>
+      <p class="text-center">Now that you have your codes, let's print them.<br>
+        You can do it easily from your browser menu when printing this whole page.</p>
+        <p class="text-center">Once done, just cut them individually so you'll be done to input
+        then close to your tree at the moment of planting.</p>
+      <div class="card-columns">
+      {% for code in codes %}
+        <div class="card">
+          <img class="card-img-top" src="{% static 'gotrees/img/header_code.png' %}" alt="Code">
+          <div class="card-body">
+            <p style="font-size: 1.9rem;" class="card-text text-center">{{ code }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+{% endblock %}

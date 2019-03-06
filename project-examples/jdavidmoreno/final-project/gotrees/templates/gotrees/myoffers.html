@@ -1,0 +1,73 @@
+{% extends "gotrees/base.html" %}
+
+{% load static %}
+
+{% block title %}My offers{% endblock %}
+
+{% block body %}
+  {% if message %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-4">
+        <div class="alert alert-warning" role="alert">
+          {{ message }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  {% endif %}
+  <h3>You got These Offers</h3>
+  <div class="containter">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <table class="table">
+        {% for offer in myoffers %}
+          <tr>
+            <td>{{ offer.offer_name }}</td>
+            <td>{{ offer.description }}</td>
+            <td>{{ offer.company }}</td>
+            <td><a href="{% url 'coupon' offer.id %}" alt="See this Offer Coupon"><button type="button" class="btn btn-primary">See</button></a>
+          </tr>
+        {% endfor %}
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  {% if offers %}
+  <h3>Looking for more Offers?</h3>
+  <h5>Here you have the latest</h5>
+    <div id="gifts_offers_discounts" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        {% for offer in offers %}
+          {% if forloop.counter0 == 0 %}
+            <div class="carousel-item active">
+              <a href="{% url 'offer' offer.id %}" alt="{{ offer.name }}" ><img class="d-block w-100" src="../../static/gotrees/offers/{{ offer.image }}"></a>
+            </div>
+          {% else %}
+            <div class="carousel-item">
+              <a href="{% url 'offer' offer.id %}" alt="{{ offer.name }}" ><img class="d-block w-100" src="../../static/gotrees/offers/{{ offer.image }}"></a>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <a class="carousel-control-prev" href="#gifts_offers_discounts" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#gifts_offers_discounts" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  {% endif %}
+{% endblock %}

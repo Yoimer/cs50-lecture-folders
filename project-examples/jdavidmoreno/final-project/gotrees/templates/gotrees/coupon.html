@@ -1,0 +1,21 @@
+{% extends "gotrees/base.html" %}
+
+{% load static %}
+
+{% block title %}Offers{% endblock %}
+
+{% block body %}
+  <h3>Coupon just valid for {% if user.first_name %}{{ user.first_name }}{% endif %} {% if user.last_name %}{{ user.last_name }}{% endif %}</h3>
+  <p class="text-center">Show this Coupon at your Favourite Stores to get the Offer</p>
+  <div class="container">
+    <div class="row justify-content-center">
+        <img class="img-fluid" src="../../static/gotrees/coupons/{{ offer.coupon }}" alt="{{ offer.name }}">
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+{% endblock %}

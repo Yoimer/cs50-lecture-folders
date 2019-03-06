@@ -1,0 +1,63 @@
+{% extends "gotrees/base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <h3>Trees welcome you!</h3>
+    {% if message %}
+    <div class="alert alert-warning" role="alert">{{ message }}</div>
+    {% endif %}
+    <div class="row justify-content-center">
+      <div class="col-5">
+        <form action="{% url 'login' %}" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="login-input">Username</label>
+            <input type="text" name="username" class="form-control" placeholder="Enter Username" id="login-input">
+            <div class="invalid-feedback">Field can not be empty</div>
+          </div>
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <input type="password" name="password" class="form-control " placeholder="Enter Password" id="login-password">
+            <div class="invalid-feedback">Field can not be empty</div>
+          </div>
+          <button class="btn btn-primary" type="submit">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <script>
+    let inputs = document.querySelectorAll('.form-control');
+    inputs.forEach(input => {
+      input.onclick = () => {
+        input.nextElementSibling.style.display = 'none';
+      }
+    });
+
+    function checkEmptyFields() {
+      let signal = 0;
+      inputs.forEach(input => {
+        if (input.value == ''){
+          input.nextElementSibling.style.display = 'block';
+          signal = 1
+        }
+      });
+      if (signal != 0){
+        return false;
+      }
+    }
+
+    document.querySelector("form").onsubmit = () => {
+      if (checkEmptyFields() == false) {
+        return false;
+      }
+    }
+  </script>
+{% endblock %}

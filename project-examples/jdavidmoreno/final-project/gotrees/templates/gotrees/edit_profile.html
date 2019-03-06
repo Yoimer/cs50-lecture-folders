@@ -1,0 +1,63 @@
+{% extends "gotrees/base.html" %}
+
+{% load static %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block body %}
+  <h3>Update my Profile</h3>
+  <br>
+  <div class="container">
+    <div class="container" id="profile_image" style="height: 50%; width: 50%; background-color: lightgray; padding: 0;">
+      {% if image %}<img class="img" style="width: 100%; object-fit: cover;" src="../../static/gotrees/uploads/{{ image }}">{% endif %}
+    </div>
+    <div class="row justify-content-center" style="visibility: {% if message %}visible{% else %}hidden{% endif %};"><div class="alert alert-warning col-md-3" role="alert">Sorry this image was too big</div></div>
+    <form action="{% url 'edit_profile' user.username %}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-row justify-content-center">
+        <div class="form-group">
+          <label for="form-profile_image">Profile Image</label><small> (Only jpg, jpeg or png smaller than 2.5mb | 1:1 ratio Strongly Recomended)</small>
+          <input type="file" class="form-control" name="profile_image" placeholder="Choose your image" id="form-profile_image">
+        </div>
+      </div>
+      <div class="form-row justify-content-center" >
+        <div class="form-group col-md-3">
+          <label for="form-first_name">First Name</label>
+          <input class="form-control" name="name" type="text" id="form-fist_name" placeholder="First Name" {% if first_name %}value="{{ first_name }}"{% endif %}>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="form-last_name">Last Name</label>
+          <input class="form-control" name="last_name" type="text" id="form-last_name" placeholder="Last Name" {% if last_name %}value="{{ last_name }}"{% endif %}>
+        </div>
+      </div>
+      <div class="form-row justify-content-center">
+        <div class="form-group col-md-3">
+          <label for="form-country">Country</label>
+          <input class="form-control" name="country" type="text" id="form-country" placeholder="Enter Country" {% if country %}value="{{ country }}"{% endif %}>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="form-region">Region</label>
+          <input class="form-control" name="region" type="text" id="form-region" placeholder="Enter Region" {% if region %}value="{{ region }}"{% endif %}>
+        </div>
+      </div>
+      <div class="form-row justify-content-center">
+        <div class="form-group col-md-9">
+          <label for="form-my_phrase">My Phrase</label>
+          <input maxlength="100" class="form-control" name="my_phrase" type="text" id="form-my_phrase" placeholder="Type Something Inspiring" {% if my_phrase %}value="{{ my_phrase }}"{% endif %}>
+        </div>
+      </div>
+      <div class="form-row justify-content-center">
+        <div class="form-group col-md-9">
+          <label for="form-my_text">Why do I do this?</label>
+          <textarea maxlength="400" class="form-control" name="my_text" id="form-my_text" placeholder="Type here what makes you moove!" {% if my_text %}value="{{ my_text }}"{% endif %}>{{ my_text }}</textarea>
+        </div>
+      </div>
+      <div class="form-row justify-content-center">
+        <button type="submit" class="btn btn-primary">Update</button>
+      </div>
+    </form>
+  </div>
+  <br>
+  <br>
+  <br>
+{% endblock %}
