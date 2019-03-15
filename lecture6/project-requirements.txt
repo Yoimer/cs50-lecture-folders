@@ -1,0 +1,73 @@
+Flack
+Released    Monday, March 4
+Due Monday, March 25 at 12pm EST
+Objectives
+Learn to use JavaScript to run code server-side.
+Become more comfortable with building web user interfaces.
+Gain experience with Socket.IO to communicate between clients and servers.
+Getting Help
+If you need help while working on the project, feel free to take advantage of any or all of the following resources:
+
+Attend one or more of the course’s sections.
+Ask questions on Discourse. Email web@cs50.harvard.edu with your GitHub username if you need access.
+Attend office hours.
+Overview
+In this project, you’ll build an online messaging service using Flask, similar in spirit to Slack. Users will be able to sign into your site with a display name, create channels (i.e. chatrooms) to communicate in, as well as see and join existing channels. Once a channel is selected, users will be able to send and receive messages with one another in real time. Finally, you’ll add a personal touch to your chat application of your choosing!
+
+Milestones
+The project is due on March 25, but we recommend that you try to meet the following milestones:
+
+Complete the Display Name, Channel Creation, and Channel List steps by March 11.
+Complete the Messages View and Sending Messages steps by March 18.
+Complete the Remembering the Channel and Personal Touch steps by March 25.
+Getting Started
+GitHub Classroom
+We’ll again use GitHub Classroom to distribute projects and collect submissions. To begin Project 2:
+
+Click here to go to the GitHub Classroom page for starting the assignment.
+Click the green “Accept this assignment” button. This will create a GitHub repository for your project. Recall that a git repository is just a location where your code will be stored and which can be used to keep track of changes you make to your code over time.
+Click on the link that follows “Your assignment has been created here”, which will direct you to the GitHub repository page for your project. It may take a few seconds for GitHub to finish creating your repository.
+In the upper-right corner of the repository page, click the “Fork” button, and then (if prompted) click on your username. This will create a fork of your project repository, a version of the repository that belongs to your GitHub account.
+Now, you should be looking at a GitHub repository titled username/project2-username, where username is your GitHub username. This will be the repository to which you will push all of your code while working on your project. When working on the project, do not directly push to the web50/project2-username repository: always push your code to your username/project2-username repository.
+Python and Flask
+As with Project 1, make sure that you have a copy of Python 3.6 or higher installed on your machine. You’ll also need to install pip. If you downloaded Python from Python’s website, you likely already have pip installed (you can check by running pip in a terminal window). If you don’t have it installed, be sure to install it before moving on!
+
+To run this Flask application:
+
+Clone your username/project2-username repository from GitHub (note: this is NOT your web50/project2-username repository).
+In a terminal window, navigate into your project2 directory.
+Run pip3 install -r requirements.txt in your terminal window to make sure that all of the necessary Python packages (Flask and Flask-SocketIO, for instance) are installed.
+Set the environment variable FLASK_APP to be application.py. On a Mac or on Linux, the command to do this is export FLASK_APP=application.py. On Windows, the command is instead set FLASK_APP=application.py.
+Run flask run to start up your Flask application.
+If you navigate to the URL provided by flask, you should see the text "Project 2: TODO"!
+Requirements
+Alright, it’s time to actually build your web application! Here are the requirements:
+
+Display Name: When a user visits your web application for the first time, they should be prompted to type in a display name that will eventually be associated with every message the user sends. If a user closes the page and returns to your app later, the display name should still be remembered.
+Channel Creation: Any user should be able to create a new channel, so long as its name doesn’t conflict with the name of an existing channel.
+Channel List: Users should be able to see a list of all current channels, and selecting one should allow the user to view the channel. We leave it to you to decide how to display such a list.
+Messages View: Once a channel is selected, the user should see any messages that have already been sent in that channel, up to a maximum of 100 messages. Your app should only store the 100 most recent messages per channel in server-side memory.
+Sending Messages: Once in a channel, users should be able to send text messages to others the channel. When a user sends a message, their display name and the timestamp of the message should be associated with the message. All users in the channel should then see the new message (with display name and timestamp) appear on their channel page. Sending and receiving messages should NOT require reloading the page.
+Remembering the Channel: If a user is on a channel page, closes the web browser window, and goes back to your web application, your application should remember what channel the user was on previously and take the user back to that channel.
+Personal Touch: Add at least one additional feature to your chat application of your choosing! Feel free to be creative, but if you’re looking for ideas, possibilities include: supporting deleting one’s own messages, supporting use attachments (file uploads) as messages, or supporting private messaging between two users.
+In README.md, include a short writeup describing your project, what’s contained in each file, and (optionally) any other additional information the staff should know about your project. Also, include a description of your personal touch and what you chose to add to the project.
+If you’ve added any Python packages that need to be installed in order to run your web application, be sure to add them to requirements.txt!
+Beyond these requirements, the design, look, and feel of the website are up to you! You’re also welcome to add additional features to your website, so long as you meet the requirements laid out in the above specification!
+
+Hints
+You shouldn’t need to use a database for this assignment. However, you should feel free to store any data you need in memory in your Flask application, as via using one or more global variables defined in application.py.
+You will likely find that local storage will prove helpful for storing data client-side that will be saved across browser sessions.
+FAQs
+Refresh this page periodically for answers to FAQs!
+
+How to Submit
+Step 1 of 2
+Go to the GitHub page for your username/project2-username repository (note: this is different from the web50/project2-username repository).
+On the right side of the screen, click the Pull request button.
+Make sure that the “base fork” is web50/project2-username, and the “head fork” is username/project2-username.
+Click “Create pull request”.
+On the next page, click the “Create pull request” button again.
+Step 2 of 2
+Fill out this form!
+
+Congratulations! You’ve completed Project 2.
