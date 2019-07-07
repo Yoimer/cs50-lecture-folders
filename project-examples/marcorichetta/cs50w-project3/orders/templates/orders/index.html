@@ -1,0 +1,135 @@
+{% extends "orders/layout.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <legend class="border-bottom mb-4">Pizzas</legend>
+
+    <div class="container menu-container">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Regular</h5>
+                <p class="card-text">Our Regular pizza is a thin-crust or Neapolitan pizza.</p>
+                <h6 class="card-subtitle mb-2 text-muted">From $12.20</h6>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    Order
+                </button>
+            </div>
+        </div>
+        <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Sicilian</h5>
+                    <p class="card-text">Our Sicilian pizza is a deep-dish or thick-crust pizza.</p>
+                    <h6 class="card-subtitle mb-2 text-muted">From $23.45</h6>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        Order
+                    </button>
+                </div>
+            </div>
+    </div>
+
+    <div class="container menu-container">
+        <legend class="border-bottom mb-4">Subs</legend>
+        <div class="col-md-4">
+            {% for sub in subs %}
+                <li>
+                    {{ sub }}
+                </li>
+            {% endfor %}
+        </div>
+        <div class="col-md-4">
+            <h2>Extras</h2>
+            {% for extra in subExtras %}
+                <li>
+                    {{ extra }}
+                </li>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="container menu-container">
+        <!-- PASTAS -->
+        <legend class="border-bottom mb-4">Pastas</legend>
+        <div class="col-md-4">
+            {% for pasta in pastas %}
+                <li>
+                    {{ pasta }}
+                </li>
+            {% endfor %}
+        </div>
+        <!-- DINNER PLATTERS -->
+        <legend class="border-bottom mb-4">Dinner Platters</legend>
+        <div class="col-md-4">
+            {% for dp in platters %}
+                <li>
+                    {{ dp }}
+                </li>
+            {% endfor %}
+        </div>
+        <!-- SALADS -->
+        <legend class="border-bottom mb-4">Salads</legend>
+        <div class="col-md-4">
+            {% for salad in salads %}
+                <li>
+                    {{ salad }}
+                </li>
+            {% endfor %}
+        </div>
+    </div>
+
+          
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Order your pizza!</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                        <div>
+                            <form>
+                                {% csrf_token %}
+                    
+                                <fieldset class="form-group">
+                                    {{ form|crispy }}
+                                </fieldset>
+                                <button type="button" id="addCart" class="btn btn-moz btn-pop">Add to cart</button>
+                            </form>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Keep ordering</button>
+                  <a href="{% url 'checkout' %}" type="button" class="btn btn-success">Go to checkout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+              document.addEventListener('DOMContentLoaded', () => {
+                
+                // Initialize key on localStorage
+                if (localStorage.getItem('cart_items') == null) {
+                    localStorage.setItem('cart_items', 0);
+                };
+
+                document.querySelector('#addCart').addEventListener('click', () => {
+                
+                    // Add +1 item on every click to 'Add to cart'
+                    tmp = localStorage.getItem('cart_items');
+                    tmp = parseInt(tmp);
+                    tmp += 1;
+                    localStorage.setItem('cart_items', tmp)
+
+                    // Update 'data-items' which holds the n° of cart items
+                    document.querySelector('#cart_badge').dataset.items = tmp
+                    
+                    // Update the content that is shown on the badge
+                    document.querySelector('#cart_badge').textContent = tmp
+                })
+
+              });
+          </script>
+{% endblock content%}

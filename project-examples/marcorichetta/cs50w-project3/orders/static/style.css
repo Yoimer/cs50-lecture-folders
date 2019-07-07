@@ -1,0 +1,61 @@
+main .form-control
+{
+    /* center form controls */
+    display: inline-block;
+
+    /* override Bootstrap's 100% width for form controls */
+    width: auto;
+}
+
+main
+{
+    /* scroll horizontally as needed */
+    overflow-x: auto;
+
+    /* center contents */
+/*     text-align: center; */
+}
+
+main img
+{
+    /* constrain images on small screens */
+    max-width: 100%;
+}
+
+.toppings {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.menu-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: baseline;
+}
+
+.card {
+    width: 14rem;
+}
+
+.btn-moz {
+    font-family: "Nunito Sans";
+    font-weight: 700; }
+    .btn:hover {
+      cursor: pointer; }
+
+.btn-pop {
+    background: transparent;
+    color: #000000;
+    box-shadow: 4px 4px #000000;
+    border: 2px solid #000000;
+    position: relative;
+    top: -2px;
+    transition: all 0.08s ease; }
+    .btn-pop:focus, .btn-pop:active, .btn-pop:hover {
+      transform: translate(4px, 4px);
+      color: #000000;
+      box-shadow: none; }

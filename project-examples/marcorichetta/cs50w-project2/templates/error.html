@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Error
+{% endblock %}
+
+{% block content %}
+    <h2>Oops, {{ message }}</h2>
+    <a href="/"> 
+        <button class="btn btn-primary" type="button">Try another one</button>
+    </a>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<script src="../static/channel.js"></script>
+{% endblock %}
+
+{% block title %}
+{{ session.current_channel }}
+{% endblock %}
+
+{% block content %}
+<div>
+    <h1 style="margin-bottom: 1rem">
+        <span class="badge badge-dark">
+            {{ session.current_channel }}
+        </span>
+    </h1>
+
+</div>
+<div class="container-channel custom-window">
+    <div id="chat-box" class="list-group">
+        {#
+            http://jinja.pocoo.org/docs/2.10/templates/#whitespace-control
+            
+            Minus(-) used to strip all the whitespace 
+            Only if there are messages, render it.
+        #}
+        <textarea id="chat" cols="30" rows="20" readonly>
+            {%- if messages -%} 
+                {%- for message in messages -%}
+                    <{{ message[0] }}> - [{{ message[1] }}]: {{ message [2] }} {{'\n'}}
+                {%- endfor -%}
+                {{ '----- These are old messages -----' }}{{- '\n' -}}
+            {%- endif -%}
+        </textarea>
+    </div>
+
+    <div id="message-box">
+        <div class="form-border">
+            <div class="form-row">
+                <div class="form-group col-sm">
+                    <div class="input-group">
+                        <input id="comment" class="form-control" size="50" autocomplete="off" autofocus>
+                    </div>
+                </div>
+                <div class="form-group col-sm-2">
+                    <button id="send-button" class="btn btn-success" type="reset">Send</button>
+                </div>
+                <div class="form-group col-sm-1">
+                    <button id="leave" type="button" class="btn btn-warning">Leave channel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="file-selector">
+        <input type="file" accept="image/*" class="form-control-file" id="exampleFormControlFile1">
+    </div>
+</div>
+
+{% endblock %}

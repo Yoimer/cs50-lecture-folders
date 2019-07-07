@@ -1,0 +1,57 @@
+main
+{
+    /* scroll horizontally as needed */
+    overflow-x: auto;
+
+    /* center contents */
+    text-align: center;
+}
+
+main img
+{
+    /* constrain images on small screens */
+    max-width: 100%;
+}
+
+/* Classes */
+
+main .form-control
+{
+    /* center form controls */
+    display: inline-block;
+
+    /* override Bootstrap's 100% width for form controls */
+    width: auto;
+}
+
+.custom-nav {
+    border: 0px;
+    padding: 0;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.custom-window {
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    border-radius: 15px;
+    padding: 30px;
+}
+
+.container-channel {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 20rem 100px;
+}
+
+/* ID */
+
+#message-box, #file-selector {
+    align-self: center;
+}
+
+#message-box {
+    margin: 30px 20px 10px 30px;
+}
+
+#chat {
+    padding: 20px;
+}

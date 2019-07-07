@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Flack Chat
+{% endblock %}
+
+{% block content %}
+    <h2>Create a new channel or join an existent one!</h2>
+    <form action="/create" method="post">
+        <div class="form-group">
+            <input type="text" class="form-control" name="channel" id="channel" autofocus>
+        </div>
+        <button class="btn btn-primary" type="submit">Create</button>
+    </form>
+
+    <script>
+
+        if (localStorage.getItem('last_channel')) {
+            // Redirect to last channel
+            let channel = localStorage.getItem('last_channel');    
+            window.location.replace('/channels/' + channel);   
+        }
+
+    </script>
+{% endblock %}

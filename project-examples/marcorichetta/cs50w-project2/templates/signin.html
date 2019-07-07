@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Flack
+{% endblock %}
+
+{% block content %}
+
+<h4>Enter your username and sign in to start chatting!</h4>
+<form action="/signin" method="POST">
+    <div class="form-group">
+        <input type="text" class="form-control" id="username" name="username" autofocus aria-describedby="userHelp">
+        <small id="userHelp" class="form-text text-muted">This username will be used to identify you on this site.</small>
+    </div>
+    <button class="btn btn-primary" type="submit">Sign In</button>
+</form>
+
+{% endblock %}

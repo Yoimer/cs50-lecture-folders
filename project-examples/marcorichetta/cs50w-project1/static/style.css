@@ -1,0 +1,47 @@
+main .form-control
+{
+    /* center form controls */
+    display: inline-block;
+
+    /* override Bootstrap's 100% width for form controls */
+    width: auto;
+}
+
+.card-body {
+    text-align: start;
+}
+
+.results-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: baseline;
+}
+
+.book-container {
+    display: flex;
+    justify-content: center;
+}
+
+.form-border {
+    border-color: #ECDB88;
+    border-style: solid;
+    border-radius: 1rem;
+    padding: 0.5rem;
+}
+
+main
+{
+    /* scroll horizontally as needed */
+    overflow-x: auto;
+
+    /* center contents */
+    text-align: center;
+}
+
+main img
+{
+    /* constrain images on small screens */
+    max-width: 100%;
+}
