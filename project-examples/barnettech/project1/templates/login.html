@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+    <div class="jumbotron">Search for a Location</div>
+{% endblock %}
+
+{% block body %}
+   <div class="headline2">Hello there welcome.  {{message}} Enter a zipcode to search
+   for (enter at least 4 characters):</div>
+
+   <!-- if logged in show the zipcode search form -->
+   {% if session['logged_in'] %}
+     <form action="{{ url_for('searchresults') }}" method="post">
+        <div><input type="text" name="zipcode" placeholder="Enter a zipcode"></div>
+        <button class="btn btn-lg btn-primary btn-block">Submit</button>
+     </form>
+   {% else %}
+     <a href="/">Try logging in again, click here</a>
+   {% endif %}
+
+{% endblock %}

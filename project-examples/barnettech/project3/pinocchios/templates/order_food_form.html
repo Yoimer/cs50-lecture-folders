@@ -1,0 +1,47 @@
+{% extends "base_generic.html" %}
+{% block content %}
+    <!-- only show the food menu to the authenticated users -->
+    {% if user.is_authenticated %}
+      <form action="" method="post">
+      {% csrf_token %}
+      <div>
+        {% for food in food_list %}
+        <div>
+          <input class="food-quantity" type="text" name="fooditem_{{food.id}}"
+          minlength="1" maxlength="3" placeholder="enter quantity"/>
+          ${{food.price}} {{ food.title }}
+          {% if food.choose_toppings != 'NO' %}
+            {% if food.choose_toppings == 'TWO' or food.choose_toppings == 'THREE' %}
+              <select multiple name="select_{{food.id}}">
+            {% else %}
+              <select name="select_{{food.id}}">
+            {% endif %}
+              {% for topping in food_toppings %}
+                <option value="{{topping}}">{{topping}}</option>
+              {% endfor %}
+            </select>
+
+          {% endif %}
+          {% if food.id == 42 or food.id == 43 %}
+            <select multiple name="select_{{food.id}}">
+              <option value="mushrooms">mushrooms</option>
+              <option value="green peppers">green peppers</option>
+              <option value="onions">onions</option>
+            </select>
+          {% endif %}
+          {% if food.food_type == 'SUB' %}
+            <select multiple name="select_{{food.id}}">
+              <option value="extra cheese">extra cheese</option>
+            </select>
+          {% endif %}
+        </div>
+        <br>
+        {% endfor %}
+
+      </div>
+      <input type="submit" value="Submit" />
+      </form>
+    {% endif %}
+
+
+{% endblock %}

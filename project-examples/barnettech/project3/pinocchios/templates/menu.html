@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+    <h1>Pinocchios Zas Menu Items</h1>
+
+    <h2>Foods on our Menu, (menu item count: {{food_count}})</h2>
+    <ul>
+
+      {% for food in food_list %}
+      <li>
+        <a href="{{ food.get_absolute_url }}">{{ food.title }}</a>
+      </li>
+      {% endfor %}
+
+    </ul>
+
+    {{food_list}}
+  {% endif %}
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+    <div class="jumbotron">Location search results</div>
+{% endblock %}
+
+{% block body %}
+    <h2>Details for zipcode {{zipcode}}:</h2>
+    <h2 class="headline2">Results are back from the locations table
+    (id, zip code, city, state, latitude, longitude, population) respectively: </h2>
+    <ul>
+<ul>
+    <!-- show all the zipcodes matched in the search, and link to their location pages -->
+    {% if count_returned_zip_info > 0 %}
+      {% for n in returned_zip_info %}
+        <a href="location?zipcode={{n[1]}}"><li>{{n}}</li></a>
+      {% endfor %}
+    {% elif count_returned_zip_info == 1 %}
+      <a href="location?zipcode={{returned_zip_info}}"><li>{{n}}</li></a>
+    {% else %}
+      No zip codes match in the present database
+    {% endif %}
+</ul>
+
+      <div><button class="btn btn-lg btn-primary btn-block"><a href="login">Click here to
+      search again</a></button></div>
+
+{% endblock %}

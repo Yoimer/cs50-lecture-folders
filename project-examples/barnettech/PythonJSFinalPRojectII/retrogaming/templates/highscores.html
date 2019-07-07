@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+    <h1>CS50 ThreeJS Blocky Game Ring Highscores</h1>
+    <ul>
+      <!-- cycle through and list all the highscores -->
+      {% for highscore in highscores %}
+      <li>
+        {{highscore.username}}: {{highscore.besttime}} seconds
+      </li>
+      {% endfor %}
+
+    </ul>
+
+  {% endif %}
+
+{% endblock %}

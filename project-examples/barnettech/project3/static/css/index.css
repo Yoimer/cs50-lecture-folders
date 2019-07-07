@@ -1,0 +1,25 @@
+.sidebar-left {
+    margin-left: 50px;
+}
+
+.food-quantity {
+    width: 140px;
+}
+
+#existing-order {
+    margin-right: 200px;
+}
+
+.site-image {
+    padding-left: 40px;
+}
+
+.jumbotron {
+    background-image: url("images/pinocchios-banner.jpeg");
+    padding: 50px;
+}
+
+#stripeform {
+    margin-left: 20px;
+    padding-left: 20px;
+}

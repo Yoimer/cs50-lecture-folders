@@ -1,0 +1,45 @@
+.sidebar-left {
+    margin-left: 50px;
+}
+
+.food-quantity {
+    width: 140px;
+}
+
+#existing-order {
+    margin-right: 200px;
+}
+
+.site-image {
+    padding-left: 40px;
+}
+
+.jumbotron {
+    background-image: url("images/spacebanner1.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    padding: 50px;
+    min-height: 400px;
+    color: #ffffff;
+}
+
+#stripeform {
+    margin-left: 20px;
+    padding-left: 20px;
+}
+
+#authenticated {
+    display: none;
+}
+
+/* below code makes the site more responsive, text is then readable on
+smaller screens */
+@media only screen
+    and (min-device-width : 375px)
+    and (max-device-width : 667px) {
+  body {
+    font-size: 30px;
+  }
+}

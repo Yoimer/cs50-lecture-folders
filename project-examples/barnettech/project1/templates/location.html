@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+    <div class="jumbotron">Location Page for zipcode {{zipcode}}:</div>
+    <h2>located at latitude {{lat}}, and longitude {{long}}</h2>
+{% endblock %}
+
+{% block body %}
+  {% if session['logged_in'] %}
+   <div>Hello welcome to the homepage for the zipcode {{zipcode}}</div> username is {{session['username']}}
+
+   <div>Here are details about this location:  {{returned_zip_info}}</div>
+
+   <div>currently the time is {{time}}
+   <div>summary is {{currently['summary']}}</div>
+   <div>dewpoint is {{currently['dewPoint']}}</div>
+   <div>humidity is {{humidity}} %</div>
+
+
+   <div>current temperature at {{zipcode}} from the darksky api is: {{temp}}</div>
+   <!-- only show the form if they haven't done a checkin here yet-->
+   {% if already_commented == false %}
+     <form action="{{ url_for('checkin') }}" method="post">
+        Check in and leave a comment about this location:
+        <div><input type="text" name="yourusername" value="{{session['username']}}"
+        placeholder="Enter a username" readonly="readonly"></div>
+        <div><input type="text" name="zipcode" value="{{zipcode}}"
+        placeholder="Enter a username" readonly="readonly"></div>
+        <div><input id="commentinput" type="text" name="comment" maxlength="1000"
+        placeholder="Enter a comment"></div>
+        <input type="hidden" name="zipcode" value="{{zipcode}}">
+        <button class="btn btn-lg btn-primary btn-block">Submit</button>
+      </form>
+    {% endif %}
+
+    <div><button class="btn btn-lg btn-primary btn-block">
+        <a href="login">Click here to search again</a></button></div>
+    <h2>Total checkins: {{total_checked_in}}</h2>
+    <!-- show all the comments/checkins at this location -->
+    <h2>Checkin comments:</h2>
+        {{location_comments}}
+  {% endif %}
+{% endblock %}

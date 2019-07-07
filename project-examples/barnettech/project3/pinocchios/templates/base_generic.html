@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+        integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+  <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+  <meta charset="utf-8">
+  <title>{% block title %}Django Simple Login{% endblock %}</title>
+</head>
+<body>
+  <container>
+    <h1 class="jumbotron">Pinocchio’s Eatery Menu <span class="site-image">
+      <img src="{% static 'images/pinocchio_72.gif' %}" alt="pinocchio"></span></h1>
+    <div class="row">
+      <div class="col-3 sidebar-left">
+        {% block sidebar %}<!-- insert default navigation text for every page -->
+        <ul>
+          <!-- show some items only for authenticated users -->
+          {% if user.is_authenticated %}
+            <li>User: {{ user.get_username }}</li>
+            <li><a href="{% url 'order'%}?next={{request.path}}">Menu, Order</a></li>
+            {% if user.get_username == 'admin' %}
+            <li><a href="{% url 'view_orders'%}?next={{request.path}}">View Orders</a></li>
+            {% endif %}
+            <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+          {% else %}
+            <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+            <li><a href="{% url 'signup'%}">Register</a></li>
+          {% endif %}
+        </ul>
+        <!-- only show the shopping cart items when logged in or
+        not already submitted -->
+        {% if user.is_authenticated and checkedout != 1 %}
+        <div class="shopping-cart">
+            {% csrf_token %}
+            <h3>Shopping Cart</h3>
+            <ul id='cart-items'>
+              {% if shopping_cart_food != "Empty Cart"  %}
+                {% for food in shopping_cart_food %}
+                  <li>quantity: {{food.quantity_ordered}}, subtotal: ${{food.price}} {{food}} {% if food.toppings %} Toppings: {{food.toppings}} {% endif %}</li>
+                {% endfor %}
+                <div id='cart-total'>Total:  ${{cart_total}}</div>
+               <br/>
+               <input id="my-checkout-button" class="checkout-button" type="submit" value="Checkout Preview" />
+              {% else %}
+                Your cart is empty
+              {% endif %}
+            </ul>
+          <!-- form to submit to the stripe api -->
+          <form id="stripeform" action="checkout" method="POST">
+            {% csrf_token %}
+            <script
+              src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="pk_test_1sWw149PtAAWvuI5dddmmxCT"
+              data-amount={% widthratio cart_total 1 100 %}
+              data-name="Pinocchio’s Pizza"
+              data-description="Example charge"
+              data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+              data-locale="auto">
+            </script>
+          </form>
+        </div>
+        {% endif %}
+
+        {% endblock %}
+      </div>
+      <div class="col">
+        <main>
+          {% block content %}
+          {% endblock %}
+        </main>
+      </div>
+    </div>
+    <hr>
+  <footer>
+  </container>
+</body>
+</html>
