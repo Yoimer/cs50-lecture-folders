@@ -1,7 +1,7 @@
 astroid==2.1.0
 Click==7.0
 dnspython==1.16.0
-eventlet==0.24.1
+eventlet==0.31.0
 Flask==1.0.2
 Flask-SocketIO==3.1.2
 greenlet==0.4.15
